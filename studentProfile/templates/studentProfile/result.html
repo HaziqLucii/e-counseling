@@ -1,0 +1,93 @@
+{% extends 'student/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+    padding-left: 300px;
+    padding-right: 300px;
+  }
+  
+  td, th {
+    border: 5px double #000000;
+    text-align: center;
+    font-size: 18px;
+    padding: 5px;
+    word-wrap: break-word;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  h1,h2,h3,h4,h5,h6,table {font-family: "Oswald"}
+  body {font-family: "Open Sans"}
+
+  </style>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="d-none">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Masthead -->
+    <header class="masthead">
+        <section class ="page-section bg-white" id="about">
+            <div class="container">
+              <h2 style="margin-bottom: 30px">Eligibility Result</h2>
+
+              <h5 style="margin-bottom: 20px">Ini adalah senarai kelayakan pengajian tinggi yang kami cadangkan:</h5>
+
+              <table style="margin-bottom: 50px !important;">
+              {% for message in eligibility_messages %}
+              <tr>
+              <td>{{ message }}</td>
+              </tr>
+              {% endfor %}
+              </table>
+
+              <a href="{% url 'profile_page'%}" onclick="showLoading(event)" style="margin-top: 20px !important;">Kembali ke Profile</a>
+            </div>
+        </section>
+    </header>
+
+    <!-- IMPORTANT -->
+    <script>
+        // Loading animation
+        function showLoading(event) {
+            event.preventDefault(); // Prevent default link behavior
+
+            Swal.fire({
+                title: 'Loading',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                    setTimeout(() => {
+                        window.location.href = event.target.href; // Redirect after a delay
+                    }, 500); // Set the desired delay in milliseconds
+                }
+            });
+        }
+
+    </script>
+    <!-- IMPORTANT -->
+{% endblock content %}
+
+{% block footer %}
+    <!-- Footer-->
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SimpleLightbox plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{% static 'student/js/scripts.js' %}"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+{% endblock footer %}
